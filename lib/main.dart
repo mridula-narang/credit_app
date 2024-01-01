@@ -35,8 +35,8 @@ class SplashScreenWidget extends StatelessWidget {
         debugPrint("On End");
       },
       childWidget: SizedBox(
-        height: 200,
-        width: 200,
+        height: 800,
+        width: 800,
         child: Image.asset("assets/icon/icon.png"),
       ),
       onAnimationEnd: () {
