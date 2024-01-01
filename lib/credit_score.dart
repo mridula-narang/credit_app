@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Import for FilteringTextInputFormatter
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class GaugeExample extends StatefulWidget {
@@ -40,7 +41,7 @@ class _GaugeExampleState extends State<GaugeExample> {
         builder: (context) {
           return AlertDialog(
             title: Text('Error'),
-            content: Text('Please enter a name before clicking the button.'),
+            content: Text('Please enter a PAN number before clicking the button.'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -105,11 +106,13 @@ class _GaugeExampleState extends State<GaugeExample> {
                     ),
                   ],
                   pointers: <GaugePointer>[
-                    NeedlePointer(value: needleValue,
-                    enableAnimation: true,
+                    NeedlePointer(
+                      value: needleValue,
+                      enableAnimation: true,
                       animationType: AnimationType.ease,
                       animationDuration: 1500,
-                      needleLength: 0.60,),
+                      needleLength: 0.60,
+                    ),
                   ],
                 ),
               ],
@@ -119,8 +122,11 @@ class _GaugeExampleState extends State<GaugeExample> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: nameController,
+                maxLength: 10, // Set the maximum length to 10 characters
+                keyboardType: TextInputType.text, // Allow alphanumeric input
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9]+$'))], // Allow only alphanumeric characters
                 decoration: InputDecoration(
-                  labelText: 'Enter Name',
+                  labelText: 'Enter PAN Number', // Change the label
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
                 ),
               ),
@@ -136,12 +142,13 @@ class _GaugeExampleState extends State<GaugeExample> {
             SizedBox(height: 20),
             Text(
               'Available Payment Methods',
-
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
-            Text(paymentOptions,
-            style: TextStyle(fontSize: 18),),
+            Text(
+              paymentOptions,
+              style: TextStyle(fontSize: 18),
+            ),
             SizedBox(height: 10),
           ],
         ),
