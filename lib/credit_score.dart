@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import for FilteringTextInputFormatter
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class GaugeExample extends StatefulWidget {
@@ -10,8 +9,8 @@ class GaugeExample extends StatefulWidget {
 
 class _GaugeExampleState extends State<GaugeExample> {
   double needleValue = 60.0;
-  TextEditingController nameController = TextEditingController();
-  String paymentOptions = ''; // Variable to store payment options statement
+  TextEditingController panController = TextEditingController();
+  String paymentOptions = '';
 
   void randomizePointer() {
     double randomValue = Random().nextDouble() * 100;
@@ -21,10 +20,9 @@ class _GaugeExampleState extends State<GaugeExample> {
   }
 
   void validateAndRandomizePointer() {
-    if (nameController.text.isNotEmpty) {
+    if (panController.text.isNotEmpty) {
       randomizePointer();
 
-      // Determine the range based on needleValue
       if (needleValue >= 0 && needleValue <= 33) {
         paymentOptions =
             'Debit/Credit Card \n EMI @ 7%   \n UPI  \n Netbanking';
@@ -41,7 +39,7 @@ class _GaugeExampleState extends State<GaugeExample> {
         builder: (context) {
           return AlertDialog(
             title: Text('Error'),
-            content: Text('Please enter a PAN number before clicking the button.'),
+            content: Text('Please enter a valid PAN number before clicking the button.'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -80,7 +78,7 @@ class _GaugeExampleState extends State<GaugeExample> {
                       color: Color(0xFFFE2A25),
                       label: 'Low',
                       sizeUnit: GaugeSizeUnit.factor,
-                      labelStyle: GaugeTextStyle(fontFamily: 'Helvetica',fontSize: 20),
+                      labelStyle: GaugeTextStyle(fontFamily: 'Helvetica', fontSize: 20),
                       startWidth: 0.50,
                       endWidth: 0.50,
                     ),
@@ -121,12 +119,10 @@ class _GaugeExampleState extends State<GaugeExample> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                controller: nameController,
-                maxLength: 10, // Set the maximum length to 10 characters
-                keyboardType: TextInputType.text, // Allow alphanumeric input
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9]+$'))], // Allow only alphanumeric characters
+                controller: panController,
+                maxLength: 10,
                 decoration: InputDecoration(
-                  labelText: 'Enter PAN Number', // Change the label
+                  labelText: 'Enter PAN Number',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
                 ),
               ),
@@ -135,9 +131,9 @@ class _GaugeExampleState extends State<GaugeExample> {
             ElevatedButton(
               onPressed: () {
                 validateAndRandomizePointer();
-                setState(() {}); // Trigger a rebuild to update the UI
+                setState(() {});
               },
-              child: Text('Randomize Pointer'),
+              child: Text('Get ECS'),
             ),
             SizedBox(height: 20),
             Text(
